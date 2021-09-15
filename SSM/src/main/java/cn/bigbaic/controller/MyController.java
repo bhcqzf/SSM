@@ -1,5 +1,7 @@
 package cn.bigbaic.controller;
 
+import cn.bigbaic.dao.StudentDao;
+import cn.bigbaic.domain.Student;
 import cn.bigbaic.service.SayHello;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -7,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * <h3>spirngmvc-study</h3>
@@ -23,6 +25,9 @@ public class MyController {
     @Autowired
     private SayHello sayHello;
 
+    @Autowired
+    private StudentDao studentDao;
+
     @ResponseBody
     @RequestMapping(value="/hello",method = {RequestMethod.GET})
     public String niHao(){
@@ -30,5 +35,17 @@ public class MyController {
         String res = "{hello:nihaoya}";
         return res;
     }
+
+    @ResponseBody
+    @RequestMapping(value="/select",method = {RequestMethod.GET})
+    public void selectStudent(){
+        List<Student> students = studentDao.selectStudent();
+        for (Student student:
+             students) {
+            System.out.println(student);
+        }
+
+    }
+
 
 }
